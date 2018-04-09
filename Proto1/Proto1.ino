@@ -23,9 +23,16 @@ void setup() {
 }
 
 void loop() {
-String input = "a";
+String input = "a"; // Have to 
 
+manual_mode(input);
+
+}
+
+  void manual_mode(String input){
+    
 switch(input){
+  
   case "a" : //Forward 
   moveDstyle(1);
   break;
@@ -58,10 +65,10 @@ switch(input){
   move_rotate(int moveDir, int rotateDir);
   break;
   
-}
-  
-   
+  } 
+    
   }
+  
 
   void moveDstyle(int dir){
     if(NoCrashDstyle() && dir > 0){
