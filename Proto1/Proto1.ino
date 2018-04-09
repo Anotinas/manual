@@ -33,7 +33,6 @@ manual_mode(input);
 
 }
 
-
   int manual_mode(String input){
     int action = interpretInput(input);
     
