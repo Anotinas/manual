@@ -23,6 +23,43 @@ void setup() {
 }
 
 void loop() {
+String input = "a";
+
+switch(input){
+  case "a" : //Forward 
+  moveDstyle(1);
+  break;
+
+  case "b" : //Backwards
+  moveDstyle(-1);
+  break;
+
+  case "c" : // rotate left
+  rotateDstyle(int dir);
+  break;
+
+  case "d" : // rotate right
+  rotateDstyle(int dir);
+  break;
+
+  case "" // forward, rotate right
+  move_rotate(int moveDir, int rotateDir);
+  break;
+
+  case "" // forward, rotate left
+  move_rotate(int moveDir, int rotateDir);
+  break;
+
+  case "" // back, rotate right
+  move_rotate(int moveDir, int rotateDir);
+  break;
+
+  case "" // back, rotate left
+  move_rotate(int moveDir, int rotateDir);
+  break;
+  
+}
+  
    
   }
 
