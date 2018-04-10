@@ -12,7 +12,7 @@ char mode;
 
 
 void setup() {
-  Serial.begin(9600); 
+  Serial3.begin(9600);
   frontSonar.attach(TRIG_PIN, ECHO_PIN);
   gyro.attach();
   encoderLeft.attach(2);
@@ -21,21 +21,18 @@ void setup() {
   encoderRight.begin();
   car.begin(encoderLeft, encoderRight,gyro);
   gyro.begin();
-
-  mode = "a";
 }
 
 void loop() {
-String input = "a"; // Have to 
 
+  manual_mode();
+  }
 
-manual_mode(input);
+int manual_mode(){
+    while(Serial3.available()){
+    //int action = interpretInput(Serial3.read());
 
-}
-
-  int manual_mode(String input){
-    int action = interpretInput(input);
-    
+    int action = Serial3.read();
     switch(action){
   
     case 1 : //Forward 
@@ -47,14 +44,18 @@ manual_mode(input);
       break;
 
     case 3 : // rotate left
-      rotateDstyle(int dir);
+      rotateDstyle(1);
       break;
 
     case 4 : // rotate right
-      rotateDstyle(int dir);
+      rotateDstyle(-1);
       break;
 
-    case 5 // forward, rotate right
+      case 5 // mode change
+      //Should call the autonomous mode function.
+      break;
+
+    /*case 5 // forward, rotate right
       move_rotate(int moveDir, int rotateDir);
       break;
 
@@ -69,17 +70,14 @@ manual_mode(input);
     case 8 // back, rotate left
       move_rotate(int moveDir, int rotateDir);
       break;
-
-    case 9 // mode change
-      mode = "a";
-      break;
-  }
-
-   return 1;
+      */
     
   }
+  }
+  return 1;
+}
 
-  int interpretInput(String input){
+  /*int interpretInput(String input){
     if(input == "m"){
       return 9;
     }
@@ -121,14 +119,14 @@ manual_mode(input);
     else if(input == "r"){ // Rotate right.
       return 4;
     }
-  }
+  }*/
   
 
   void moveDstyle(int dir){
     if(NoCrashDstyle() && dir > 0){
     car.go(dir);
     }
-    else if (NoCrashBack()){
+   else {
       car.go(dir);
     }
   }
