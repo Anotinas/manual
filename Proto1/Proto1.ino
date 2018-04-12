@@ -3,6 +3,7 @@
 Odometer encoderLeft, encoderRight;
 Gyroscope gyro;
 Car car;
+char action;
 
 const int TRIG_PIN = 6;
 const int ECHO_PIN = 5;
@@ -12,7 +13,7 @@ char mode;
 
 
 void setup() {
-  Serial3.begin(9600);
+  Serial.begin(9600);
   frontSonar.attach(TRIG_PIN, ECHO_PIN);
   gyro.attach();
   encoderLeft.attach(2);
@@ -21,37 +22,34 @@ void setup() {
   encoderRight.begin();
   car.begin(encoderLeft, encoderRight,gyro);
   gyro.begin();
+  action = 0;
 }
 
 void loop() {
 
-  manual_mode();
+  /* manual_mode();
   }
 
-int manual_mode(){
-    while(Serial3.available()){
-    //int action = interpretInput(Serial3.read());
+void manual_mode(){*/
+    while(Serial.available() > 0){
+    //int action = interpretInput(Serial.read());
 
-    int action = Serial3.read();
+    action = Serial.read();
     switch(action){
   
-    case 1 : //Forward 
-      moveDstyle(1);
-      break;
+    case 'f' : //Forward 
+      moveDstyle(3);
+      
+    case 'b' : //Backwards
+      moveDstyle(-3);
 
-    case 2 : //Backwards
-      moveDstyle(-1);
-      break;
+    case 'l' : // rotate left
+      rotateDstyle(3);
+      
+    case 'r' : // rotate right
+      rotateDstyle(-3);
 
-    case 3 : // rotate left
-      rotateDstyle(1);
-      break;
-
-    case 4 : // rotate right
-      rotateDstyle(-1);
-      break;
-
-      case 5 // mode change
+      case 'm' :// mode change
       //Should call the autonomous mode function.
       break;
 
@@ -74,7 +72,6 @@ int manual_mode(){
     
   }
   }
-  return 1;
 }
 
   /*int interpretInput(String input){
@@ -142,7 +139,7 @@ int manual_mode(){
   }
   
   boolean NoCrashDstyle(){ //Experimental
-  if(frontSonar.getDistance() >0 && frontSonar.getDistance()< 15){
+  if(frontSonar.getDistance() > 0 && frontSonar.getDistance()< 15){
     return false;
   }
   return true;
